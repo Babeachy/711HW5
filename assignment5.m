@@ -2,10 +2,11 @@
 % Group number L01
 % Program lets user enter graph data, plot type, plot color, plot title, and plot axis
 % and plots the data
-
+clear
 keepRunning = true;
 while keepRunning %Program iterates until user does not want to enter more data
     badData = true;
+    close all
     while badData %loop checks for bad data
         badData = false;
         try
@@ -66,12 +67,17 @@ while keepRunning %Program iterates until user does not want to enter more data
     end
     while true
         symbolColor = input('Enter symbol color(y,m,c,r,g,b,w,k): ','s');
-        if length(symbolColor) == 1 %tests if it is a character
+        if length(symbolColor) == 1 %tests if it is a character(so the next test statement doesn't throw an error)
             if sum(symbolColor == 'ymcrgbwk') == 1 %then tests to see if that character lies within string of valid characters
                 break
             end
-        disp('Invalid symbol color')
         end
+        disp('Invalid symbol color')
+    end
+    if symbolColor == 'y' | symbolColor == 'w'%makes yellow and white colors readable on the graph
+        whitebg('black')
+    else
+        whitebg('white')
     end
     if dataFormat == 'r' %plots graph according to data format, and the symbol information the user selected
         plot(data(1,:),data(2,:),[symbolColor,symbolType])
